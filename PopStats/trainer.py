@@ -14,14 +14,14 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
 
-import tensorflow as tf
+# import tensorflow as tf
 
 from loader import DataIterator
 from model import DeepSet
 
-def log_scalar(writer, tag, value, step):
-    summary = tf.Summary(value=[tf.Summary.Value(tag=tag, simple_value=value)])
-    writer.add_summary(summary, step)
+# def log_scalar(writer, tag, value, step):
+#     summary = tf.Summary(value=[tf.Summary.Value(tag=tag, simple_value=value)])
+#     writer.add_summary(summary, step)
 
     
 class Trainer(object):
@@ -47,7 +47,7 @@ class Trainer(object):
         best_mse = 1.0e6
         loss_val = 0.0
 
-        train_writer = tf.summary.FileWriter(self.log_dir)
+        # train_writer = tf.summary.FileWriter(self.log_dir)
 
         for j in trange(self.num_epochs, desc="Epochs: ", ncols=80):
             train_iterator = train.get_iterator(train_loss)
@@ -79,9 +79,9 @@ class Trainer(object):
 
             self.visualize(valid)
 
-            log_scalar(train_writer, 'train_loss', train_loss, j+1)
-            log_scalar(train_writer, 'test_mae', test_mae, j+1)
-            log_scalar(train_writer, 'test_mse', test_mse, j+1)
+            # log_scalar(train_writer, 'train_loss', train_loss, j+1)
+            # log_scalar(train_writer, 'test_mae', test_mae, j+1)
+            # log_scalar(train_writer, 'test_mse', test_mse, j+1)
             
 
         for j in trange(self.num_epochs, desc="Epochs: "):
@@ -113,9 +113,9 @@ class Trainer(object):
 
             self.visualize(valid)
 
-            log_scalar(train_writer, 'train_loss', train_loss, self.num_epochs+j+1)
-            log_scalar(train_writer, 'test_mae', test_mae, self.num_epochs+j+1)
-            log_scalar(train_writer, 'test_mse', test_mse, self.num_epochs+j+1)
+            # log_scalar(train_writer, 'train_loss', train_loss, self.num_epochs+j+1)
+            # log_scalar(train_writer, 'test_mae', test_mae, self.num_epochs+j+1)
+            # log_scalar(train_writer, 'test_mse', test_mse, self.num_epochs+j+1)
             
         return best_mae, best_mse        
     
@@ -184,10 +184,10 @@ if __name__ == '__main__':
     with h5py.File(ddir+'truth.mat') as f:
         t = np.squeeze(f['X_parameter'][()])
         y = np.squeeze(f['Y'][()])
-    print 'Loaded dataset'
+    print('Loaded dataset')
     
     nb_epoch = 500 # np.max([1024*1024/train.L,100])
-    print train.d
+    print(train.d)
     t = Trainer(train.d, (t,y), nb_epoch, odir, odir+'logs/')
     a, b = t.fit(train, valid)
     t.model = torch.load(odir + 'best_mse_model.pth')

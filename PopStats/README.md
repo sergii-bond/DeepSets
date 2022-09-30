@@ -1,20 +1,31 @@
 ## Requirements
 
-* Python 2
-* MATLAB
+* Python
 * PyTorch
 * h5py
 * numpy
 * tqdm
+* Matlab or Julia
 
 ## Generating the data
 
 In order to generate the data required for these experiments, run the commands below in this directory. 
 
+* Using MATLAB
+
 ```
 cd generator
 ./generate.sh
 ```
+
+* Using Julia
+
+```
+cd generator
+julia generate.jl
+```
+
+Note: With Julia only experiment 1 is supported, and with training set sizes from 7 to 12 (to reduce disk space).
 
 It should take a while for the data to be generated for all experiments.
 
@@ -23,7 +34,7 @@ It should take a while for the data to be generated for all experiments.
 There are 4 tasks as in the paper and for each task, 11 different-sized training sets. You may run an experiment using a particular training set by running the command below:
 
 ```
-python2 trainer.py <task_id> <exp_id>
+python trainer.py <task_id> <exp_id>
 ```
 
 where `<task_id>` is the ID of the task you would like to run, ranging from 1 to 4. You may find more information on task descriptions in the first few lines of the files `generator/generate_task<task_id>_dataset.m`.
